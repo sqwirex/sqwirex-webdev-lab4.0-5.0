@@ -1,50 +1,50 @@
-{% macro render_user_form(form_data, errors, roles, submit_label='Сохранить', is_edit=False) %}
-<form method="post" novalidate>
-    {% if not is_edit %}
+
+{% macro user_form(action_url, values, errors, roles, submit_text, mode, current_user_obj) %}
+<form method="post" action="{{ action_url }}" class="card card-body shadow-sm">
+    {% if mode == 'create' %}
     <div class="mb-3">
-        <label class="form-label" for="login">Логин</label>
-        <input class="form-control {% if errors.get('login') %}is-invalid{% endif %}" id="login" name="login" value="{{ form_data.get('login', '') }}">
-        {% if errors.get('login') %}<div class="invalid-feedback">{{ errors.get('login') }}</div>{% endif %}
+        <label class="form-label">Логин</label>
+        <input type="text" name="login" class="form-control {% if errors.get('login') %}is-invalid{% endif %}" value="{{ values.get('login', '') }}">
+        {% if errors.get('login') %}<div class="invalid-feedback">{{ errors['login'] }}</div>{% endif %}
     </div>
+
     <div class="mb-3">
-        <label class="form-label" for="password">Пароль</label>
-        <input class="form-control {% if errors.get('password') %}is-invalid{% endif %}" type="password" id="password" name="password">
-        {% if errors.get('password') %}<div class="invalid-feedback">{{ errors.get('password') }}</div>{% endif %}
+        <label class="form-label">Пароль</label>
+        <input type="password" name="password" class="form-control {% if errors.get('password') %}is-invalid{% endif %}">
+        {% if errors.get('password') %}<div class="invalid-feedback">{{ errors['password'] }}</div>{% endif %}
     </div>
     {% endif %}
 
     <div class="mb-3">
-        <label class="form-label" for="last_name">Фамилия</label>
-        <input class="form-control {% if errors.get('last_name') %}is-invalid{% endif %}" id="last_name" name="last_name" value="{{ form_data.get('last_name', '') }}">
-        {% if errors.get('last_name') %}<div class="invalid-feedback">{{ errors.get('last_name') }}</div>{% endif %}
+        <label class="form-label">Фамилия</label>
+        <input type="text" name="last_name" class="form-control {% if errors.get('last_name') %}is-invalid{% endif %}" value="{{ values.get('last_name', '') }}">
+        {% if errors.get('last_name') %}<div class="invalid-feedback">{{ errors['last_name'] }}</div>{% endif %}
     </div>
 
     <div class="mb-3">
-        <label class="form-label" for="first_name">Имя</label>
-        <input class="form-control {% if errors.get('first_name') %}is-invalid{% endif %}" id="first_name" name="first_name" value="{{ form_data.get('first_name', '') }}">
-        {% if errors.get('first_name') %}<div class="invalid-feedback">{{ errors.get('first_name') }}</div>{% endif %}
+        <label class="form-label">Имя</label>
+        <input type="text" name="first_name" class="form-control {% if errors.get('first_name') %}is-invalid{% endif %}" value="{{ values.get('first_name', '') }}">
+        {% if errors.get('first_name') %}<div class="invalid-feedback">{{ errors['first_name'] }}</div>{% endif %}
     </div>
 
     <div class="mb-3">
-        <label class="form-label" for="middle_name">Отчество</label>
-        <input class="form-control {% if errors.get('middle_name') %}is-invalid{% endif %}" id="middle_name" name="middle_name" value="{{ form_data.get('middle_name', '') }}">
-        {% if errors.get('middle_name') %}<div class="invalid-feedback">{{ errors.get('middle_name') }}</div>{% endif %}
+        <label class="form-label">Отчество</label>
+        <input type="text" name="middle_name" class="form-control" value="{{ values.get('middle_name', '') }}">
     </div>
 
-    <div class="mb-4">
-        <label class="form-label" for="role_id">Роль</label>
-        <select class="form-select {% if errors.get('role_id') %}is-invalid{% endif %}" id="role_id" name="role_id">
+    <div class="mb-3">
+        <label class="form-label">Роль</label>
+        <select name="role_id" class="form-select" {% if mode == 'edit' and current_user_obj.role_name == 'Пользователь' %}disabled{% endif %}>
             <option value="">Без роли</option>
             {% for role in roles %}
-                <option value="{{ role.id }}" {% if form_data.get('role_id', '')|string == role.id|string %}selected{% endif %}>{{ role.name }}</option>
+            <option value="{{ role['id'] }}" {% if values.get('role_id')|string == role['id']|string %}selected{% endif %}>{{ role['name'] }}</option>
             {% endfor %}
         </select>
-        {% if errors.get('role_id') %}<div class="invalid-feedback">{{ errors.get('role_id') }}</div>{% endif %}
+        {% if mode == 'edit' and current_user_obj.role_name == 'Пользователь' %}
+        <div class="form-text">Обычный пользователь не может менять роль.</div>
+        {% endif %}
     </div>
 
-    <div class="d-flex gap-2">
-        <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
-        <a class="btn btn-outline-secondary" href="{{ url_for('index') }}">Отмена</a>
-    </div>
+    <button class="btn btn-primary">{{ submit_text }}</button>
 </form>
 {% endmacro %}

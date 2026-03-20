@@ -1,22 +1,14 @@
+
 {% extends 'base.html' %}
+{% block title %}Просмотр пользователя{% endblock %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">Просмотр пользователя</h1>
-    <a class="btn btn-outline-secondary" href="{{ url_for('index') }}">Назад</a>
-</div>
-<div class="card shadow-sm">
-    <div class="table-responsive">
-        <table class="table mb-0">
-            <tbody>
-            <tr><th class="w-25">Идентификатор</th><td>{{ user.id }}</td></tr>
-            <tr><th>Логин</th><td>{{ user.login }}</td></tr>
-            <tr><th>Фамилия</th><td>{{ user.last_name or '—' }}</td></tr>
-            <tr><th>Имя</th><td>{{ user.first_name }}</td></tr>
-            <tr><th>Отчество</th><td>{{ user.middle_name or '—' }}</td></tr>
-            <tr><th>Роль</th><td>{{ user.role_name or '—' }}</td></tr>
-            <tr><th>Дата создания</th><td>{{ user.created_at }}</td></tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<h1 class="h3 mb-3">Просмотр пользователя</h1>
+<table class="table table-bordered">
+    <tr><th>ID</th><td>{{ user['id'] }}</td></tr>
+    <tr><th>Логин</th><td>{{ user['login'] }}</td></tr>
+    <tr><th>Фамилия</th><td>{{ user['last_name'] or '—' }}</td></tr>
+    <tr><th>Имя</th><td>{{ user['first_name'] }}</td></tr>
+    <tr><th>Отчество</th><td>{{ user['middle_name'] or '—' }}</td></tr>
+    <tr><th>Роль</th><td>{{ user['role_name'] or '—' }}</td></tr>
+</table>
 {% endblock %}

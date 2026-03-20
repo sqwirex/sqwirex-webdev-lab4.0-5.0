@@ -1,29 +1,28 @@
+
 {% extends 'base.html' %}
+{% block title %}Вход{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-lg-5">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h1 class="h3 mb-3">Вход в систему</h1>
-                <form method="post">
-                    <div class="mb-3">
-                        <label class="form-label" for="login">Логин</label>
-                        <input class="form-control" id="login" name="login" value="{{ form.get('login', '') }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="password">Пароль</label>
-                        <input class="form-control" type="password" id="password" name="password" required>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="remember" name="remember" {% if form.get('remember') %}checked{% endif %}>
-                        <label class="form-check-label" for="remember">Запомнить меня</label>
-                    </div>
-                    <button class="btn btn-primary w-100" type="submit">Войти</button>
-                </form>
-                <div class="mt-3 small text-muted">
-                    Тестовый пользователь: <code>user</code> / <code>qwerty</code>
-                </div>
+    <div class="col-md-5">
+        <h1 class="h3 mb-3">Вход</h1>
+        <form method="post" class="card card-body shadow-sm">
+            <div class="mb-3">
+                <label class="form-label">Логин</label>
+                <input type="text" name="login" class="form-control">
             </div>
+            <div class="mb-3">
+                <label class="form-label">Пароль</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                <label class="form-check-label" for="remember">Запомнить меня</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Войти</button>
+        </form>
+        <div class="mt-3 small text-muted">
+            Администратор: admin / Admin123!<br>
+            Пользователь: user / User123!
         </div>
     </div>
 </div>

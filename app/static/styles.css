@@ -1,11 +1,4 @@
-body {
-    min-height: 100vh;
-}
 
-.table th {
-    white-space: nowrap;
-}
-
-code {
-    color: #b42318;
-}
+body { min-height: 100vh; display:flex; flex-direction:column; }
+.actions-cell { display:flex; flex-wrap:wrap; gap:.4rem; }
+table th { white-space: nowrap; }
