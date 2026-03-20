@@ -1,0 +1,11 @@
+body {
+    min-height: 100vh;
+}
+
+.table th {
+    white-space: nowrap;
+}
+
+code {
+    color: #b42318;
+}

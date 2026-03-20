@@ -1,0 +1,50 @@
+{% macro render_user_form(form_data, errors, roles, submit_label='Сохранить', is_edit=False) %}
+<form method="post" novalidate>
+    {% if not is_edit %}
+    <div class="mb-3">
+        <label class="form-label" for="login">Логин</label>
+        <input class="form-control {% if errors.get('login') %}is-invalid{% endif %}" id="login" name="login" value="{{ form_data.get('login', '') }}">
+        {% if errors.get('login') %}<div class="invalid-feedback">{{ errors.get('login') }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="password">Пароль</label>
+        <input class="form-control {% if errors.get('password') %}is-invalid{% endif %}" type="password" id="password" name="password">
+        {% if errors.get('password') %}<div class="invalid-feedback">{{ errors.get('password') }}</div>{% endif %}
+    </div>
+    {% endif %}
+
+    <div class="mb-3">
+        <label class="form-label" for="last_name">Фамилия</label>
+        <input class="form-control {% if errors.get('last_name') %}is-invalid{% endif %}" id="last_name" name="last_name" value="{{ form_data.get('last_name', '') }}">
+        {% if errors.get('last_name') %}<div class="invalid-feedback">{{ errors.get('last_name') }}</div>{% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="first_name">Имя</label>
+        <input class="form-control {% if errors.get('first_name') %}is-invalid{% endif %}" id="first_name" name="first_name" value="{{ form_data.get('first_name', '') }}">
+        {% if errors.get('first_name') %}<div class="invalid-feedback">{{ errors.get('first_name') }}</div>{% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="middle_name">Отчество</label>
+        <input class="form-control {% if errors.get('middle_name') %}is-invalid{% endif %}" id="middle_name" name="middle_name" value="{{ form_data.get('middle_name', '') }}">
+        {% if errors.get('middle_name') %}<div class="invalid-feedback">{{ errors.get('middle_name') }}</div>{% endif %}
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label" for="role_id">Роль</label>
+        <select class="form-select {% if errors.get('role_id') %}is-invalid{% endif %}" id="role_id" name="role_id">
+            <option value="">Без роли</option>
+            {% for role in roles %}
+                <option value="{{ role.id }}" {% if form_data.get('role_id', '')|string == role.id|string %}selected{% endif %}>{{ role.name }}</option>
+            {% endfor %}
+        </select>
+        {% if errors.get('role_id') %}<div class="invalid-feedback">{{ errors.get('role_id') }}</div>{% endif %}
+    </div>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
+        <a class="btn btn-outline-secondary" href="{{ url_for('index') }}">Отмена</a>
+    </div>
+</form>
+{% endmacro %}
